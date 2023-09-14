@@ -16,3 +16,349 @@ bin-release/
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Sign In to Wavebasis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <meta name=”description” content=”The best Elliott Wave software. Automatic wave counts and technical analysis for professional traders: Bridges the gap between theory and practice.”>
+  <link rel="shortcut icon" type="image/png" href="static/img/favicon.png">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126449149-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-126449149-1');
+  </script>
+  <style type="text/css">
+    #signup-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    #signup-container:before {
+        content: " ";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: .1;
+        background-image: url('/static/img/reaching-candles-labeled-600x338.png');
+        background-repeat: no-repeat;
+        background-color: #010206;
+        background-size: 100% 100%;
+        z-index: -1;
+    }
+    #wb-login-container {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 400px;
+        height: 420px;
+    }
+    #welcome-message {
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        display: hidden;
+        position: absolute;
+        top: 180px;
+        left: 50%;
+        /* z-index: -1; */
+        /* text-align: center; */
+        /* padding: 6px 10px; */
+        padding: 0;
+        margin-left: -250px;
+        width: 500px;
+        border-radius: 6px;
+        /* background: rgba(255,255,255,0.1); */
+        color: #f3f5f7;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+        -moz-transition: opacity 1.5s ease-in-out;
+        -webkit-transition: opacity 1.5s ease-in-out;
+    }
+    #welcome-message.shown {
+        opacity: 1;
+    }
+    #welcome-message h1 {
+        font-size: 1.4em;
+        font-weight: 400;
+    }
+    #cta-signup {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    .cta-signup, .cta-signup-sm {
+        font-size: 25px;
+        text-align: center;
+        line-height: .7em;
+    }
+    .cta-signup-sm {
+        font-size: 20px;
+        margin-top: 50px;
+    }
+    #welcome-footer {
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+        display: hidden;
+        position: absolute;
+        bottom: 150px;
+        /* z-index: -1; */
+        padding: 0;
+        width: 100%;
+        color: #ffffff;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+        -moz-transition: opacity 1.5s ease-in-out;
+        -webkit-transition: opacity 1.5s ease-in-out;
+    }
+    #welcome-footer.shown {
+        opacity: 1;
+    }
+    .footer-message {
+        max-width: 40%;
+        margin: auto;
+    }
+    .centered {
+        text-align: center;
+    }
+    /* iPad Air */
+    @media only screen and (max-height: 1180px) and (max-width: 820px) {
+        #welcome-message {
+            top: 120px;
+        }
+        #welcome-footer {
+            bottom: 50px;
+            line-height: 24px;
+        }
+        .footer-message {
+            max-width: 50%;
+        }
+    }
+    /* Average desktop 1366x1080 */
+    @media only screen and (max-height: 1080px) {
+        #welcome-message {
+            top: 120px;
+        }
+        #welcome-footer {
+            bottom: 70px;
+            line-height: 24px;
+        }
+    }
+    /* Average laptop & iPad Air/Mini/Pro */
+    @media only screen and (max-height: 1024px) and (min-width: 769px) {
+        #welcome-message {
+            top: 15px;
+        }
+        #welcome-footer {
+            bottom: 0;
+            line-height: 14px;
+        }
+        .footer-message {
+            text-align: center;
+            max-width: 100%;
+        }
+    }
+    /* iPad */
+    @media only screen and (max-height: 1024px) and (max-width: 768px) {
+        #welcome-message {
+            top: 15px;
+        }
+        #welcome-footer {
+            bottom: 20px;
+            line-height: 24px;
+        }
+        .footer-message {
+            text-align: center;
+            max-width: 85%;
+        }
+    }
+    /* Small laptop */
+    @media only screen and (max-height: 720px) {
+        #welcome-message {
+            top: 5px;
+        }
+        #welcome-footer {
+            bottom: 0;
+            line-height: 9px;
+        }
+        .footer-message {
+            text-align: center;
+            max-width: 100%;
+        }
+    }
+    /* Phones */
+    @media only screen and (max-height: 667px) {
+        #welcome-message {
+            top: 10px;
+        }
+        #welcome-footer.shown {
+            display: none;
+        }
+    }
+
+    body {
+        height: 98vh;
+    }
+    body, .auth0-lock.auth0-lock .auth0-lock-overlay {
+        background: -webkit-radial-gradient(#1e1e4c, #111118) rgba(34,34,40,0.94)!important;
+        background: radial-gradient(#1e1e4c, #111118) rgba(34,34,40,0.94)!important;
+    }
+    a {
+        color: #46B8E7;
+        text-decoration: none;
+    }
+    a:hover {
+        color: #8DCDEE;
+    }
+  </style>
+
+  <!-- Facebook ad tracking -->
+  <script>
+  let currentPage = JSON.parse('"/login"');
+  if (currentPage.includes('signup')) {
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '412606736200054');
+    fbq('track', 'PageView');
+    fbq('trackCustom', 'StartSignup');
+  }
+  </script>
+  <!-- <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=412606736200054&ev=PageView&noscript=1"
+  /></noscript> -->
+  <!-- First Promoter Affiliate visitor tracking -->
+  <script>
+      // For production:
+      (function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src='https://cdn.firstpromoter.com/fprom.js',t.onload=t.onreadystatechange=function(){var t=this.readyState;if(!t||"complete"==t||"loaded"==t)try{$FPROM.init("xnvvmo5o",".wavebasis.com")}catch(t){}};var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)})();
+      // For dev:
+      // (function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src='https://cdn.firstpromoter.com/fprom.js',t.onload=t.onreadystatechange=function(){var t=this.readyState;if(!t||"complete"==t||"loaded"==t)try{$FPROM.init("xnvvmo5o",".fibonacci.local")}catch(t){}};var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)})();
+  </script>
+</head>
+<body>
+
+  <!--[if IE 8]>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.5/ie8.js"></script>
+  <![endif]-->
+
+  <!--[if lte IE 9]>
+  <script src="https://cdn.auth0.com/js/base64.js"></script>
+  <script src="https://cdn.auth0.com/js/es5-shim.min.js"></script>
+  <![endif]-->
+  <div id="signup-container">
+      <div id="welcome-message">
+          <!-- <h1>Welcome to WaveBasis</h1> -->
+          <div id="cta-signup">
+              <p class="cta-signup">Sign up to start your</p>
+              <p class="cta-signup">14-Day Free Trial of WaveBasis!</p>
+              (No credit card required)
+              <p class="cta-signup-sm"><a href="https://wavebasis.com">Learn more about WaveBasis...</a></p>
+          </div>
+      </div>
+      <div id="welcome-footer">
+          <div class="footer-message">
+              <!-- <p>WaveBasis helps you make smarter trading decisions and take control
+              of your trading whether you trade stocks, forex, cryptocurrencies, futures or, other instruments.</p>
+              <p>Quickly and consistently find high-probability trading opportunities
+                  and be the best Elliott Wave trader you can be.</p> -->
+              <p>Use WaveBasis to quickly and consistently find high-probability trading opportunities whether
+                 you trade stocks, forex, cryptocurrencies, futures, or other instruments.</p>
+              <p>Make smarter trading decisions and be the best Elliott Wave trader you can be.</p>
+              <p class="centered">
+                  <a href="https://wavebasis.com/docs/frequently-asked-questions/how-does-the-free-trial-work/" target="_blank">
+                      How does the free trial work?
+                  </a>
+              </p>
+          </div>
+      </div>
+  </div>
+  <div id="wb-login-container"></div>
+
+
+  <!-- <script src="https://cdn.auth0.com/js/lock/11.12.1/lock.min.js"></script> -->
+  <script src="https://cdn.auth0.com/js/lock/12.0.2/lock.min.js"></script>
+  <script>
+    const languageDictionary = {
+        title: '', 
+        signUpTitle: '',
+        signUpSubmitLabel: 'Get Started',
+        emailInputPlaceholder: 'Your email address',
+        passwordInputPlaceholder: 'Password'
+    };
+
+    // let additionalSignUpFields = [{
+    //     name: 'phone',
+    //     placeholder: 'phone number (optional)',
+    //     icon: '/static/img/phone-icon3.png',
+    //     validator: function() {
+    //       return true;
+    //     }
+    // }];
+
+    var lock = new Auth0Lock('3hLVSRFmj8WOetbJGOzkHIokOJ42o1tE', 'auth.wavebasis.com', {
+      auth: {
+        redirectUrl: 'https://app.wavebasis.com/callback',
+        responseType: 'code',
+        sso: false
+      },
+      configurationBaseUrl: 'https://cdn.auth0.com',
+      rememberLastLogin: true,
+      languageDictionary: languageDictionary,
+      theme: {
+        logo: '/static/img/wb-logo-stacked-dark-rect.png',
+        primaryColor: '#148FCE'
+      },
+      closable: false,
+      autofocus: true,
+      avatar: null,
+      container: 'wb-login-container',
+      additionalSignUpFields: [{
+        name: 'name',
+        placeholder: 'Your name',
+        storage: 'root'
+      }]
+    });
+
+    lock.show({gravatar: false});
+
+    // srs
+    let page = JSON.parse('"/login"');
+    if (page.includes('signup')) {
+        var hasBeenRun = false;
+        lock.on("signin ready", function() {
+            if (!hasBeenRun) {
+                var tabsList = document.getElementsByClassName('auth0-lock-tabs')[0];
+                var signup = tabsList.childNodes[1].childNodes[0];
+                signup.click();
+
+                var welcome = document.getElementById('welcome-message');
+                let footer = document.getElementById('welcome-footer');
+                // var overlay = document.getElementsByClassName('auth0-lock-overlay')[0];
+                // overlay.appendChild(welcome);
+                window.setTimeout(function() {
+                    welcome.className = 'shown';
+                    footer.className = 'shown';
+                }, 500);
+                hasBeenRun = true;
+            }
+        });
+    }
+  </script>
+</body>
+</html>
